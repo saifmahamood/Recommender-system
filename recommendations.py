@@ -113,7 +113,22 @@ def sim_pearson(prefs,p1,p2):
 	if den==0: return 0
 	r=num/den
 	return r
-
+# Returns the Tanimato Score for p1 and p2
+def tanimato_score(prefs,p1,p2):
+	si = {}
+	# get mutually related items
+	for item in prefs[p1]:
+		if item in prefs[p2]: si[item] = 1
+	n = len(si)
+	# if num of common elements 0, return 0
+	if n == 0: return 0
+	print(si)
+	sum_intersection = sum([prefs[p1][it] for it in si if [prefs[p2][it]] > 0])		
+	print(sum_intersection)
+	sum_union = sum([prefs[p1][it] for it in si]) + sum([prefs[p2][it] for it in si]) - sum_intersection
+	print(sum_union)
+	r = sum_intersection/sum_union
+	return r
 # Returns the best matches for person from the prefs dictionary.
 # Number of results and similarity function are optional params.
 def topMatches(prefs,person,n=5,similarity=sim_pearson):
